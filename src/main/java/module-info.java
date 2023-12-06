@@ -10,6 +10,9 @@ module com.example.capstone_2 {
     requires org.kordamp.bootstrapfx.core;
     requires eu.hansolo.tilesfx;
     requires com.almasb.fxgl.all;
+    requires org.apache.commons.io;
+    requires java.desktop;
+    requires jaudiotagger;
 
     opens com.example.capstone_2 to javafx.fxml;
     exports com.example.capstone_2;

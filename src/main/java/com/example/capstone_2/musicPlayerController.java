@@ -1,5 +1,6 @@
 package com.example.capstone_2;
 
+import com.example.capstone_2.util.Functions;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -15,12 +16,11 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.util.Duration;
+import org.apache.commons.io.FilenameUtils;
 
-import  javafx.scene.image.*;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.InputStream;
+import java.io.IOException;
 import java.net.URL;
 import java.util.*;
 
@@ -33,8 +33,6 @@ public class musicPlayerController implements Initializable {
     @FXML
     private Label maxDurationLabel;
 
-    @FXML
-    private Label chooseMusic;
     @FXML
     private Button forwardButton;
     @FXML
@@ -49,19 +47,25 @@ public class musicPlayerController implements Initializable {
     private Slider progressSlider;
     @FXML
     private Slider volumeSlider;
+    @FXML
+    private Label artistLabel;
 
     private Media media;
+    FileInputStream fileInputStream;
     private Timer timer;
     private TimerTask task;
     private MediaPlayer mediaPlayer;
-    private File directory;
+    private File songs_directory;
     private File[] files;
     private ArrayList<File> songs;
+    private ArrayList<Image> images;
+
+    public String songName;
+
 
     boolean running;
     private int songNumber;
-
-    private long minutes = 0,seconds = 0;
+    private long minutes = 0, seconds = 0;
 
 
     @Override
@@ -69,37 +73,30 @@ public class musicPlayerController implements Initializable {
 
         songs = new ArrayList<File>();
         try {
-            directory = new File("src/Music");
+            songs_directory = new File("src/Music");
 
         } catch (Exception e) {
             System.out.println("File not found!!!!!!!!!!!!!!!!!!!");
         }
-        files = directory.listFiles();
+        files = songs_directory.listFiles();
         if (files != null) {
-            Collections.addAll(songs, files);
+            for (File file : files) {
+                if (isImageFile(file)) {
+                    System.out.println("Skipping image file " + file.getName());
+                } else {
+                    songs.add(file);
+                }
+            }
         }
+
         media = new Media(songs.get(songNumber).toURI().toString());
         mediaPlayer = new MediaPlayer(media);
-        songLabel.setText(songs.get(songNumber).getName());
-
-//        File file = new File("src/Images/playButton.png");
-//        Image img = new Image(Objects.requireNonNull(getClass().getResourceAsStream(String.valueOf(file))));
-//        ImageView imageView = new ImageView(img);
-
-//        songImage.setImage(img);
-
-        FileInputStream fileInputStream;
         try {
-            fileInputStream = new FileInputStream("src/Images/pauseButton.png");
-        } catch (FileNotFoundException e) {
+            setSongImage(songs.get(songNumber).getName());
+        } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        Image image = new Image(fileInputStream);
-        songImage.setImage(image);
-
-
         mediaPlayer.setOnReady(this::getDuration);
-
         volumeSlider.valueProperty().addListener(new ChangeListener<Number>() {
             @Override
             public void changed(ObservableValue<? extends Number> observableValue, Number number, Number t1) {
@@ -126,10 +123,16 @@ public class musicPlayerController implements Initializable {
 
 
     }
-    void playProgress(ActionEvent actionEvent)
-    {
-        if(mediaPlayer!= null)
-        {
+
+    void setLabel(String name, String artist) {
+        name = FilenameUtils.removeExtension(name);
+        songLabel.setText(name);
+        artistLabel.setText(artist);
+
+    }
+
+    void playProgress(ActionEvent actionEvent) {
+        if (mediaPlayer != null) {
             timer = new Timer();
             task = new TimerTask() {
                 @Override
@@ -144,7 +147,7 @@ public class musicPlayerController implements Initializable {
 
                     long minutes = (long) current / 60;
                     long seconds = (long) current % 60;
-                    Platform.runLater(()->{
+                    Platform.runLater(() -> {
                         currentDuration.setText(String.format("%02d:%02d", minutes, seconds));
 
                     });
@@ -152,15 +155,42 @@ public class musicPlayerController implements Initializable {
                     if (targetProgress <= progress) {
                         progressSlider.setValue(targetProgress);
                     }
-                    if(current/end == 1.0)
-                    {
+                    if (current / end == 1.0) {
                         mediaPlayer.stop();
-                       running = false;
+                        running = false;
                     }
                 }
             };
-            timer.scheduleAtFixedRate(task , 1000, 1000);
+            timer.scheduleAtFixedRate(task, 1000, 1000);
         }
+    }
+
+    private static boolean isImageFile(File file) {
+        // Check if the file is an image file based on its extension.
+        String fileName = file.getName().toLowerCase();
+        return fileName.endsWith(".jpg") || fileName.endsWith(".jpeg") || fileName.endsWith(".png")
+                || fileName.endsWith(".gif") || fileName.endsWith(".bmp");
+        // You can extend this list based on the image formats you want to exclude.
+    }
+
+    void setSongImage(String name) throws IOException {
+        name = FilenameUtils.removeExtension(name);
+
+        for (File file : files) {
+            String filename = file.getName();
+            filename = FilenameUtils.removeExtension(filename);
+            if (isImageFile(file) && filename.equals(name)) {
+                fileInputStream = new FileInputStream(file);
+                Image image = new Image(fileInputStream);
+                songImage.setImage(image);
+                return;
+            }
+        }
+        fileInputStream = new FileInputStream("src/Music/default_cover.png");
+        Image image = new Image(fileInputStream);
+        songImage.setImage(image);
+
+
     }
 
     void getDuration() {
@@ -179,10 +209,11 @@ public class musicPlayerController implements Initializable {
             maxDurationLabel.setText("Invalid Duration");
         }
     }
-    void reset()
-    {
+
+    void reset() {
         progressSlider.setValue(0);
     }
+
     boolean state() {
 
         boolean temp = running;
@@ -196,51 +227,60 @@ public class musicPlayerController implements Initializable {
     }
 
     @FXML
-    void forwardMusic(ActionEvent event) {
-        if(songNumber < songs.size() - 1)
+    void forwardMusic(ActionEvent event) throws IOException {
+        if (songNumber < songs.size() - 1)
             songNumber++;
         else
-            songNumber= 0;
+            songNumber = 0;
 
-            mediaPlayer.stop();
-            media = new Media(songs.get(songNumber).toURI().toString());
-            mediaPlayer = new MediaPlayer(media);
-            songLabel.setText(songs.get(songNumber).getName());
-            running = true;
+        songName = songs.get(songNumber).getName();
+        mediaPlayer.stop();
+        media = new Media(songs.get(songNumber).toURI().toString());
+
+        mediaPlayer = new MediaPlayer(media);
+        running = true;
         mediaPlayer.setOnReady(this::getDuration);
-            playMusic(event);
-            reset();
+        playMusic(event);
+        reset();
+        setSongImage(songName);
+        Map<String, String> map = Functions.extractMetadata(songs.get(songNumber).getPath());
+        System.out.println(map.get("Title"));
+        System.out.println(map.get("Album"));
+        System.out.println(map.get("Artist"));
+        songImage.setImage(Functions.extractAndDisplayAlbumCover(songs.get(songNumber).getPath()));
+        setLabel(songName,map.get("Artist"));
 
 
     }
 
     @FXML
     void playMusic(ActionEvent event) {
-        if(state())
-         mediaPlayer.play();
+        if (state())
+            mediaPlayer.play();
         else
-         mediaPlayer.pause();
+            mediaPlayer.pause();
 
         playProgress(event);
     }
+
     @FXML
-    void prevMusic(ActionEvent event) {
-        if(songNumber != 0 ) {
+    void prevMusic(ActionEvent event) throws IOException {
+        if (songNumber != 0) {
             songNumber--;
-        }
-        else
+        } else
             songNumber = songs.size() - 1;
 
-             mediaPlayer.stop();
-            media = new Media(songs.get(songNumber).toURI().toString());
-            mediaPlayer = new MediaPlayer(media);
-            songLabel.setText(songs.get(songNumber).getName());
-
-
-            running = true;
+        songName = songs.get(songNumber).getName();
+        mediaPlayer.stop();
+        media = new Media(songs.get(songNumber).toURI().toString());
+        mediaPlayer = new MediaPlayer(media);
+        running = true;
         mediaPlayer.setOnReady(this::getDuration);
-            playMusic(event);
-            reset();
+        playMusic(event);
+        reset();
+        setSongImage(songName);
+//        Map<String, String> map = Functions.extractMetadata(songs.get(songNumber).toURI().toString());
+//        setLabel(songName,map.get("Artist"));
 
     }
 

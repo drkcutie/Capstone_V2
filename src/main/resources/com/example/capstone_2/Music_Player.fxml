@@ -5,24 +5,23 @@
 <?import javafx.scene.control.Slider?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.text.Font?>
+<?import javafx.scene.layout.VBox?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="323.0" prefWidth="823.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.capstone_2.musicPlayerController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="321.0" prefWidth="1066.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.capstone_2.musicPlayerController">
    <children>
-      <Label layoutX="315.0" layoutY="57.0" prefHeight="62.0" prefWidth="158.0" text="Music Player">
-         <font>
-            <Font size="27.0" />
-         </font>
-      </Label>
-      <Label fx:id="chooseMusic" layoutX="504.0" layoutY="23.0" onMouseClicked="#chooseMusic" text="Choose" />
-      <Button fx:id="playButton" layoutX="338.0" layoutY="251.0" mnemonicParsing="false" onAction="#playMusic" prefHeight="26.0" prefWidth="55.0" text="Play" />
-      <Button fx:id="prevButton" layoutX="282.0" layoutY="252.0" mnemonicParsing="false" onAction="#prevMusic" text="&lt;&lt;" />
-      <Button fx:id="forwardButton" layoutX="412.0" layoutY="252.0" mnemonicParsing="false" onAction="#forwardMusic" text="&gt;&gt;" />
-      <Label fx:id="songLabel" layoutX="36.0" layoutY="14.0" text="Label" />
-      <Slider fx:id="progressSlider" layoutX="174.0" layoutY="285.0" prefHeight="14.0" prefWidth="369.0" />
-      <Slider fx:id="volumeSlider" layoutX="701.0" layoutY="285.0" prefHeight="14.0" prefWidth="82.0" value="100.0" />
-      <Label fx:id="maxDurationLabel" layoutX="556.0" layoutY="284.0" text="0:00" />
-      <Label fx:id="currentDuration" layoutX="138.0" layoutY="284.0" text="0:00" />
+      <Button fx:id="playButton" layoutX="445.0" layoutY="252.0" mnemonicParsing="false" onAction="#playMusic" prefHeight="26.0" prefWidth="55.0" text="Play" />
+      <Button fx:id="prevButton" layoutX="378.0" layoutY="252.0" mnemonicParsing="false" onAction="#prevMusic" text="&lt;&lt;" />
+      <Button fx:id="forwardButton" layoutX="533.0" layoutY="252.0" mnemonicParsing="false" onAction="#forwardMusic" text="&gt;&gt;" />
+      <Slider fx:id="progressSlider" layoutX="288.0" layoutY="285.0" prefHeight="14.0" prefWidth="369.0" />
+      <Slider fx:id="volumeSlider" layoutX="785.0" layoutY="285.0" prefHeight="14.0" prefWidth="82.0" value="100.0" />
+      <Label fx:id="maxDurationLabel" layoutX="666.0" layoutY="284.0" text="0:00" />
+      <Label fx:id="currentDuration" layoutX="235.0" layoutY="283.0" text="0:00" />
       <ImageView fx:id="songImage" fitHeight="54.0" fitWidth="64.0" layoutX="18.0" layoutY="250.0" pickOnBounds="true" preserveRatio="true" />
+      <VBox alignment="TOP_CENTER" layoutX="107.0" layoutY="265.0" prefHeight="38.0" prefWidth="106.0">
+         <children>
+            <Label fx:id="songLabel" text="Label" />
+            <Label fx:id="artistLabel" text="Label" />
+         </children>
+      </VBox>
    </children>
 </AnchorPane>
