@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Slider?>
+<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="321.0" prefWidth="1066.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.capstone_2.musicPlayerController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="321.0" prefWidth="1005.0" style="-fx-background-color: grey;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.capstone_2.footerController">
    <children>
       <Button fx:id="playButton" layoutX="445.0" layoutY="252.0" mnemonicParsing="false" onAction="#playMusic" prefHeight="26.0" prefWidth="55.0" text="Play" />
       <Button fx:id="prevButton" layoutX="378.0" layoutY="252.0" mnemonicParsing="false" onAction="#prevMusic" text="&lt;&lt;" />
@@ -19,9 +21,27 @@
       <ImageView fx:id="songImage" fitHeight="54.0" fitWidth="64.0" layoutX="18.0" layoutY="250.0" pickOnBounds="true" preserveRatio="true" />
       <VBox alignment="TOP_CENTER" layoutX="107.0" layoutY="265.0" prefHeight="38.0" prefWidth="106.0">
          <children>
-            <Label fx:id="songLabel" text="Label" />
-            <Label fx:id="artistLabel" text="Label" />
+            <Label fx:id="songLabel" />
+            <Label fx:id="artistLabel" />
          </children>
       </VBox>
+      <ImageView fx:id="repeatButton" fitHeight="26.0" fitWidth="22.0" layoutX="592.0" layoutY="254.0" onMouseClicked="#toggleRepeat" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="file:/C:/Users/Derrick/Documents/IdeaProjects/Capstone_2/src/img/Icons/repeat-untoggled.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="shuffleButton" fitHeight="22.0" fitWidth="22.0" layoutX="328.0" layoutY="254.0" onMouseClicked="#toggleShuffle">
+         <image>
+            <Image url="file:/C:/Users/Derrick/Documents/IdeaProjects/Capstone_2/src/img/Icons/shuffle-untoggled.png" />
+         </image>
+         <cursor>
+            <Cursor fx:constant="DEFAULT" />
+         </cursor>
+      </ImageView>
+      <ImageView fx:id="volumeImage" fitHeight="22.0" fitWidth="22.0" layoutX="763.0" layoutY="281.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="file:/C:/Users/Derrick/Documents/IdeaProjects/Capstone_2/src/img/Icons/volume-max.png" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>

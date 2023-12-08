@@ -9,7 +9,7 @@ import org.jaudiotagger.audio.exceptions.InvalidAudioFrameException;
 import org.jaudiotagger.tag.FieldKey;
 import org.jaudiotagger.tag.Tag;
 import org.jaudiotagger.tag.datatype.Artwork;
-
+import org.apache.commons.io.FilenameUtils;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
@@ -17,6 +17,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class Functions {
 
@@ -37,18 +38,24 @@ public class Functions {
 
             // Get the tag (metadata) from the audio file
             Tag tag = audioFile.getTag();
-
+            Artwork artwork = tag.getFirstArtwork();
             // Extract specific metadata fields
             metadata.put("Title", tag.getFirst(FieldKey.TITLE));
             metadata.put("Artist", tag.getFirst(FieldKey.ARTIST));
             metadata.put("Album", tag.getFirst(FieldKey.ALBUM));
-            metadata.put("Genre", tag.getFirst(FieldKey.GENRE));
-            metadata.put("Year", tag.getFirst(FieldKey.YEAR));
+//            metadata.put("Genre", tag.getFirst(FieldKey.GENRE));
+//            metadata.put("Year", tag.getFirst(FieldKey.YEAR));
 
         } catch (Exception e) {
             e.printStackTrace();
         }
-
+        if(Objects.equals(metadata.get("Title"), ""))
+        {
+            File file = new File(filePath);
+            String title =  nameWithoutExtension(file);
+            metadata.put("Title",title);
+            metadata.put("Artist", "Unknown Artist");
+        }
         return metadata;
     }
 
@@ -73,6 +80,8 @@ public class Functions {
 
                 System.out.println("Album Cover found and processed.");
             } else {
+                File file = new File("src/img/default/no-image-icon.jpg");
+                image = new Image(file.toURI().toString());
                 System.out.println("No Album Cover found.");
             }
 
@@ -87,6 +96,17 @@ public class Functions {
         ByteArrayInputStream inputStream = new ByteArrayInputStream(imageData);
         return new Image(inputStream);
     }
+    public static String nameWithoutExtension(File file)
+    {
+        String name = file.getName();
+        name = FilenameUtils.removeExtension(name);
+        return name;
+    }
 
+
+
+
+
+    
 
 }
