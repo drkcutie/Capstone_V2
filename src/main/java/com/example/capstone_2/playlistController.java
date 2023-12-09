@@ -87,9 +87,6 @@ public class playlistController implements Initializable {
 
         files1 = playlistDirectory.listFiles();
 
-        artists = new HashSet<>();
-        albums = new HashSet<>();
-
         if(files1 != null){
             for (File playlist : files1) {
                 File[] playListFiles = playlist.listFiles(); // playlist folders
@@ -101,10 +98,6 @@ public class playlistController implements Initializable {
                            String artist = map.get("Artist");
                            String album = map.get("Album");
                            String filepath = file.getPath();
-
-
-                           artists.add(artist);
-                           albums.add(album);
 
                             if (!Artist.artistMap.containsKey(artist)) {
                                 Artist.artistMap.put(artist, new ArrayList<>());
@@ -137,11 +130,8 @@ public class playlistController implements Initializable {
 //            System.out.println("File Paths: " + filePaths);
 //            System.out.println();
 //        }
-
         playlistContentList.getItems().addAll(playlists);
         artistContentList.getItems().addAll(Artist.getAllArtists());
         albumContentList.getItems().addAll(Albums.getAllAlbums());
-
-
     }
 }

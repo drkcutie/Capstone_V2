@@ -1,35 +1,31 @@
 package com.example.capstone_2;
 
-import javafx.scene.Parent;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
 import java.io.IOException;
 
-public class Main extends Application {
-
+public class Selection extends Application {
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("Main.fxml"));
-        Parent root = fxmlLoader.load();
-        Scene scene = new Scene(root);
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("playList.fxml"));
-
-
-        stage.setMinHeight(600);
-        stage.setMinWidth(900);
+        FXMLLoader fxmlLoader = new FXMLLoader(Selection.class.getResource("selection.fxml"));
+        Scene scene = new Scene(fxmlLoader.load());
         stage.setTitle("Prototype!");
         stage.setScene(scene);
         stage.show();
 
-        stage.setOnCloseRequest(windowEvent -> {
-            Platform.exit();
-            System.exit(0);
+        stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+            @Override
+            public void handle(WindowEvent windowEvent) {
+                Platform.exit();
+                System.exit(0);
+            }
         });
     }
 

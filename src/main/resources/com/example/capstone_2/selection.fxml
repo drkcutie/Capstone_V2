@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.effect.Light.Distant?>
+<?import javafx.scene.effect.Lighting?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.capstone_2.SelectionController">
+   <center>
+      <TableView fx:id="tableMusic" prefHeight="603.0" prefWidth="1285.0" BorderPane.alignment="CENTER">
+        <columns>
+          <TableColumn fx:id="Number" editable="false" minWidth="15.0" prefWidth="75.0" text="#" />
+          <TableColumn fx:id="title" editable="false" minWidth="147.0" prefWidth="734.0" text="TITLE" />
+            <TableColumn fx:id="album" editable="false" minWidth="67.0" prefWidth="336.0" text="ALBUM" />
+            <TableColumn fx:id="timeDuration" editable="false" minWidth="27.0" prefWidth="133.0">
+               <graphic>
+                  <ImageView fitHeight="18.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="file:/C:/Users/maste/Music/proj/Capstone_V2-Capstone_V2/src/img/clock-308938_1280.png" />
+                     </image>
+                  </ImageView>
+               </graphic></TableColumn>
+        </columns>
+         <columnResizePolicy>
+            <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+         </columnResizePolicy>
+      </TableView>
+   </center>
+   <top>
+      <Pane maxWidth="1.7976931348623157E308" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <children>
+            <ImageView fitHeight="203.0" fitWidth="2089.0" layoutX="-2.0" layoutY="-3.0">
+               <image>
+                  <Image url="file:/C:/Users/maste/Music/proj/Capstone_V2-Capstone_V2/src/img/Untitled%20design%20(1).png" />
+               </image>
+            </ImageView>
+            <Pane layoutX="14.0" layoutY="-1.0" prefHeight="200.0" prefWidth="224.0">
+               <children>
+                  <ImageView fitHeight="155.0" fitWidth="209.0" layoutX="11.0" layoutY="25.0">
+                     <image>
+                        <Image url="file:/C:/Users/maste/Music/proj/Capstone_V2-Capstone_V2/src/img/simon-berger-twukN12EN7c-unsplash.jpg" />
+                     </image>
+                  </ImageView>
+               </children></Pane>
+            <TextArea layoutX="260.0" layoutY="29.0" opacity="0.0" prefHeight="146.0" prefWidth="449.0" wrapText="true">
+               <font>
+                  <Font name="Arial Narrow Bold" size="48.0" />
+               </font>
+               <effect>
+                  <Lighting bumpInput="$null">
+                     <light>
+                        <Light.Distant />
+                     </light>
+                  </Lighting>
+               </effect>
+               <opaqueInsets>
+                  <Insets right="100.0" top="1.0" />
+               </opaqueInsets>
+            </TextArea>
+            <Text fx:id="PlaylistName" layoutX="251.0" layoutY="125.0" strokeType="OUTSIDE" strokeWidth="0.0" text="PLAYLIST" wrappingWidth="777.13671875">
+               <font>
+                  <Font name="Arial Black" size="68.0" />
+               </font>
+            </Text>
+         </children>
+      </Pane>
+   </top>
+</BorderPane>

@@ -16,4 +16,6 @@ module com.example.capstone_2 {
 
     opens com.example.capstone_2 to javafx.fxml;
     exports com.example.capstone_2;
+    exports com.example.capstone_2.util;
+    opens com.example.capstone_2.util to javafx.fxml;
 }
