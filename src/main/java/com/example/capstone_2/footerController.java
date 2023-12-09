@@ -75,6 +75,7 @@ public class footerController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
+
         songs = new ArrayList<File>();
         try {
             songs_directory = new File("src/Music");

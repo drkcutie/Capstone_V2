@@ -13,7 +13,7 @@ import java.io.IOException;
 public class footer extends Application {
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(footer.class.getResource("Music_Player.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(footer.class.getResource("Footer.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
         stage.setTitle("Prototype!");
         stage.setScene(scene);

@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Slider?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane maxHeight="80.0" maxWidth="1.7976931348623157E308" minHeight="80.0" minWidth="950.0" prefHeight="88.0" prefWidth="905.0" style="-fx-background-color: gray;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.capstone_2.footerController">
+   <top>
+      <HBox alignment="CENTER" prefHeight="44.0" prefWidth="862.0" spacing="10.0">
+         <children>
+            <ImageView fx:id="shuffleButton" fitHeight="26.0" fitWidth="26.0" onMouseClicked="#toggleShuffle" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="file:/C:/Users/Derrick/Documents/IdeaProjects/Capstone_2/src/img/Icons/shuffle-untoggled.png" />
+               </image>
+            </ImageView>
+            <Button fx:id="prevButton" mnemonicParsing="false" onAction="#prevMusic" text="&lt;&lt;" />
+            <Button fx:id="playButton" mnemonicParsing="false" onAction="#playMusic" text="Play" />
+            <Button fx:id="forwardButton" mnemonicParsing="false" onAction="#forwardMusic" text="&gt;&gt;" />
+            <ImageView fx:id="repeatButton" fitHeight="26.0" fitWidth="26.0" onMouseClicked="#toggleRepeat" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="file:/C:/Users/Derrick/Documents/IdeaProjects/Capstone_2/src/img/Icons/repeat-untoggled.png" />
+               </image>
+            </ImageView>
+         </children>
+         <BorderPane.margin>
+            <Insets bottom="10.0" />
+         </BorderPane.margin>
+      </HBox>
+   </top>
+   <center>
+      <HBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label fx:id="currentDuration" text="0:00" HBox.hgrow="NEVER" />
+            <Slider fx:id="progressSlider" maxWidth="500.0" minWidth="200.0" HBox.hgrow="ALWAYS" />
+            <Label fx:id="maxDurationLabel" text="0:00" HBox.hgrow="NEVER" />
+         </children>
+      </HBox>
+   </center>
+   <left>
+      <HBox alignment="TOP_CENTER" prefHeight="25.0" prefWidth="188.0" BorderPane.alignment="CENTER">
+         <children>
+            <ImageView fx:id="songImage" fitHeight="53.0" fitWidth="62.0" pickOnBounds="true" preserveRatio="true" HBox.hgrow="NEVER" />
+            <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
+               <children>
+                  <Label fx:id="songLabel" text="Title" />
+                  <Label fx:id="artistLabel" text="Artist" />
+               </children>
+            </VBox>
+         </children>
+         <BorderPane.margin>
+            <Insets bottom="30.0" left="10.0" />
+         </BorderPane.margin>
+      </HBox>
+   </left>
+   <right>
+      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <children>
+            <ImageView fx:id="volumeImage" fitHeight="25.0" fitWidth="17.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="file:/C:/Users/Derrick/Documents/IdeaProjects/Capstone_2/src/img/Icons/volume-max.png" />
+               </image>
+               <HBox.margin>
+                  <Insets right="10.0" />
+               </HBox.margin>
+            </ImageView>
+            <Slider fx:id="volumeSlider" maxWidth="150.0" minHeight="-Infinity" minWidth="60.0" value="100.0" HBox.hgrow="ALWAYS" />
+         </children>
+         <BorderPane.margin>
+            <Insets bottom="40.0" right="10.0" />
+         </BorderPane.margin>
+      </HBox>
+   </right>
+   <bottom>
+      <VBox prefHeight="12.0" prefWidth="846.0" BorderPane.alignment="CENTER" />
+   </bottom>
+</BorderPane>
