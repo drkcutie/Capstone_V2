@@ -56,6 +56,10 @@ public class Functions {
             metadata.put("Title",title);
             metadata.put("Artist", "Unknown Artist");
         }
+        if(Objects.equals(metadata.get("Album"),""))
+        {
+            metadata.put("Album","Unknown Album");
+        }
         return metadata;
     }
 
@@ -104,7 +108,16 @@ public class Functions {
     }
 
 
+    public static boolean checkFile(File file){
+        if(file.isFile() && file.exists()){
+            String filename = file.getName().toLowerCase();
+            if(filename.endsWith(".mp3") || filename.endsWith(".m4a") || filename.endsWith(".m4v") || filename.endsWith(".wav")){
+                return true;
+            }
+        }
 
+        return false;
+    }
 
 
     

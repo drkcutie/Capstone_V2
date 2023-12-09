@@ -78,7 +78,7 @@ public class footerController implements Initializable {
 
         songs = new ArrayList<File>();
         try {
-            songs_directory = new File("src/Music");
+            songs_directory = new File("src/Music/Playlist1");
             icon_directory = new File("src/img/Icons");
 
         } catch (Exception e) {
