@@ -118,6 +118,16 @@ public class Functions {
 
         return false;
     }
+    public static String nameWithoutExtension(String filename) {
+        String cleanedName = filename.replaceAll("^[0-9]+[.\\s]+", "").trim();
+
+        // Remove file extension
+        int extensionIndex = cleanedName.lastIndexOf(".");
+        if (extensionIndex != -1) {
+            return cleanedName.substring(0, extensionIndex);
+        }
+        return cleanedName;
+    }
 
 
     

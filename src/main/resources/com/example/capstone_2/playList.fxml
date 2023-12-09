@@ -13,7 +13,7 @@
                <content>
                   <BorderPane fx:id="playListContent" prefHeight="200.0" prefWidth="200.0">
                      <center>
-                        <ListView fx:id="playlistContentList" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+                        <ListView fx:id="playlistContentList" onMouseClicked="#sendData" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
                      </center></BorderPane>
                </content>
           </Tab>

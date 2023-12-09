@@ -18,8 +18,6 @@ public class Main extends Application {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("Main.fxml"));
         Parent root = fxmlLoader.load();
         Scene scene = new Scene(root);
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("playList.fxml"));
-
 
         stage.setMinHeight(600);
         stage.setMinWidth(900);

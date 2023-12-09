@@ -1,9 +1,14 @@
 package com.example.capstone_2;
 
-import com.example.capstone_2.util.example;
+import com.example.capstone_2.util.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.media.Media;
 import javafx.util.Duration;
+
+import java.awt.*;
 import java.io.File;
+import java.io.ObjectInputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import javafx.scene.media.MediaPlayer;
@@ -19,10 +24,11 @@ import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import javafx.scene.control.cell.PropertyValueFactory;
 
+
 public class SelectionController {
     private File directory;
     private File[] files;
-    private ArrayList<File> songs;
+    private static ArrayList<File> songs = new ArrayList<>();
     private MediaPlayer mediaPlayer;
     private Media media;
 
@@ -39,19 +45,29 @@ public class SelectionController {
 
 
     @FXML
-    private TableColumn<example, Integer> Number;
+    private  TableColumn<example, Integer> Number;
 
     @FXML
-    private TableColumn<example, String> album;
+    private  TableColumn<example, String> album;
 
     @FXML
-    private TableView<example> tableMusic;
+    private  TableView<example> tableMusic;
 
     @FXML
-    private TableColumn<example, String> timeDuration;
+    private  TableColumn<example, String> timeDuration;
 
     @FXML
-    private TableColumn<example, String> title;
+    private  TableColumn<example, String> title;
+    @FXML
+    private TableColumn<example,Image> SongImg;
+
+    public String key;
+    public enum Type {
+        PLAYLIST,
+        ALBUM
+        ,ARTIST
+    }
+    static ObservableList<example> data = FXCollections.observableArrayList();
 
 
 
@@ -65,31 +81,60 @@ public class SelectionController {
         assert title != null : "fx:id=\"title\" was not injected: check your FXML file 'selection.fxml'.";
         assert PlaylistName != null : "fx:id=\"PlaylistName\" was not injected: check your FXML file 'selection.fxml'.";
 
-        songs = new ArrayList<>();
-        try {
-            directory = new File("src/Music/Playlist1");
-        } catch (Exception e) {
-            System.out.println("File not found!!!!!!!!!!!!!!!!!!!");
-        }
+        directory = new File("src/Music/Playlist1");
         files = directory.listFiles();
         if (files != null) {
-            Collections.addAll(songs, files);
-        }
-        if (files != null && files.length > 0) {
-            File parentDirectory = files[0].getParentFile();
-            if (parentDirectory != null) {
-                String playlistName = parentDirectory.getName();
-                PlaylistName.setText(playlistName);
+            for (File file : files) {
+                if (Functions.isImageFile(file)) {
+                    System.out.println("Skipping image file " + file.getName());
+                } else {
+                    songs.add(file);
+                }
             }
-        }else{
-            PlaylistName.setText("PLAYLIST");
         }
-        ObservableList<example> data = FXCollections.observableArrayList();
+        setPlaylist();
+        Number.setCellValueFactory(new PropertyValueFactory<>("number"));  // Use "number" instead of "Number"
+        title.setCellValueFactory(new PropertyValueFactory<>("title"));
+        album.setCellValueFactory(new PropertyValueFactory<>("album"));
+        timeDuration.setCellValueFactory(new PropertyValueFactory<>("timeDuration"));
+        SongImg.setCellValueFactory(new PropertyValueFactory<>("Image"));
+        tableMusic.setItems(data);
+
+    }
+
+    public void setFiles(String key, Type type) {
+        songs.clear();
+        data.clear();
+        PlaylistName.setText(key);
+        this.key = key;
+        ArrayList<String> temp = new ArrayList<>();
+        switch(type)
+        {
+            case PLAYLIST:
+                temp = Playlist.getSongsfromPlaylist(key);
+                break;
+            case ARTIST:
+                temp = Artist.getSongsfromArtist(key);
+                break;
+            case ALBUM:
+                temp = Albums.getSongsfromAlbum(key);
+                break;
+        }
+        for(String path : temp)
+        {
+            File file = new File(path);
+            songs.add(file);
+        }
+        setPlaylist();
+    }
 
 
-        for (int i = 1; i <= songs.size(); i++) {
-            final int index = i;  // Create a final variable to capture the correct value of i
-            File song = songs.get(i - 1);
+    public static void setPlaylist()
+    {
+
+        for (int i = 0; i < songs.size(); i++) {
+            final int index = i + 1;  // Create a final variable to capture the correct value of i
+            File song = songs.get(i);
 
             // Create a Media object for each file
             Media songMedia = new Media(song.toURI().toString());
@@ -107,21 +152,16 @@ public class SelectionController {
                 long minutes = totalSeconds / 60;
                 long seconds = totalSeconds % 60;
                 String formattedDuration = String.format("%02d:%02d", minutes, seconds);
-
+                Image img = new Image(new File("src/img/default/no-image-icon.jpg").toURI().toString());
                 // Create example object and add it to the data list
-                example songExample = new example(index, song.getName(), "Unknown", formattedDuration);
+                example songExample = new example(index, Functions.nameWithoutExtension(song.getName()), "Unknown", formattedDuration,img);
                 data.add(songExample);
 
                 // Dispose of the MediaPlayer after obtaining the duration
                 songPlayer.dispose();
             });
         }
-        Number.setCellValueFactory(new PropertyValueFactory<>("number"));  // Use "number" instead of "Number"
-        title.setCellValueFactory(new PropertyValueFactory<>("title"));
-        album.setCellValueFactory(new PropertyValueFactory<>("album"));
-        timeDuration.setCellValueFactory(new PropertyValueFactory<>("timeDuration"));
 
-        tableMusic.setItems(data);
     }
 
 

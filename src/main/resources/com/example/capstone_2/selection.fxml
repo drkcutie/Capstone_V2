@@ -18,13 +18,14 @@
       <TableView fx:id="tableMusic" prefHeight="603.0" prefWidth="1285.0" BorderPane.alignment="CENTER">
         <columns>
           <TableColumn fx:id="Number" editable="false" minWidth="15.0" prefWidth="75.0" text="#" />
-          <TableColumn fx:id="title" editable="false" minWidth="147.0" prefWidth="734.0" text="TITLE" />
+            <TableColumn fx:id="SongImg" editable="false" minWidth="55.0" prefWidth="55.0" text="img" />
+          <TableColumn fx:id="title" editable="false" minWidth="147.0" prefWidth="878.0" text="TITLE" />
             <TableColumn fx:id="album" editable="false" minWidth="67.0" prefWidth="336.0" text="ALBUM" />
             <TableColumn fx:id="timeDuration" editable="false" minWidth="27.0" prefWidth="133.0">
                <graphic>
                   <ImageView fitHeight="18.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="file:/C:/Users/maste/Music/proj/Capstone_V2-Capstone_V2/src/img/clock-308938_1280.png" />
+                        <Image url="file:/C:/Users/maste/Downloads/openjfx-21.0.1_windows-x64_bin-sdk/javafx-sdk-21.0.1/Capstone_V2/src/img/default/clock-308938_1280.png" />
                      </image>
                   </ImageView>
                </graphic></TableColumn>
@@ -37,19 +38,6 @@
    <top>
       <Pane maxWidth="1.7976931348623157E308" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
-            <ImageView fitHeight="203.0" fitWidth="2089.0" layoutX="-2.0" layoutY="-3.0">
-               <image>
-                  <Image url="file:/C:/Users/maste/Music/proj/Capstone_V2-Capstone_V2/src/img/Untitled%20design%20(1).png" />
-               </image>
-            </ImageView>
-            <Pane layoutX="14.0" layoutY="-1.0" prefHeight="200.0" prefWidth="224.0">
-               <children>
-                  <ImageView fitHeight="155.0" fitWidth="209.0" layoutX="11.0" layoutY="25.0">
-                     <image>
-                        <Image url="file:/C:/Users/maste/Music/proj/Capstone_V2-Capstone_V2/src/img/simon-berger-twukN12EN7c-unsplash.jpg" />
-                     </image>
-                  </ImageView>
-               </children></Pane>
             <TextArea layoutX="260.0" layoutY="29.0" opacity="0.0" prefHeight="146.0" prefWidth="449.0" wrapText="true">
                <font>
                   <Font name="Arial Narrow Bold" size="48.0" />
@@ -65,11 +53,24 @@
                   <Insets right="100.0" top="1.0" />
                </opaqueInsets>
             </TextArea>
-            <Text fx:id="PlaylistName" layoutX="251.0" layoutY="125.0" strokeType="OUTSIDE" strokeWidth="0.0" text="PLAYLIST" wrappingWidth="777.13671875">
+            <ImageView fitHeight="200.0" fitWidth="2500.0" layoutY="-1.0">
+               <image>
+                  <Image url="file:/C:/Users/maste/Downloads/openjfx-21.0.1_windows-x64_bin-sdk/javafx-sdk-21.0.1/Capstone_V2/src/img/default/Untitled%20design%20(1).png" />
+               </image>
+            </ImageView>
+            <Text fx:id="PlaylistName" layoutX="260.0" layoutY="125.0" strokeType="OUTSIDE" strokeWidth="0.0" text="PLAYLIST" wrappingWidth="777.13671875">
                <font>
                   <Font name="Arial Black" size="68.0" />
                </font>
             </Text>
+            <Pane layoutX="14.0" layoutY="-1.0" prefHeight="200.0" prefWidth="224.0">
+               <children>
+                  <ImageView fitHeight="128.0" fitWidth="200.0" layoutX="12.0" layoutY="36.0">
+                     <image>
+                        <Image url="file:/C:/Users/maste/Downloads/openjfx-21.0.1_windows-x64_bin-sdk/javafx-sdk-21.0.1/Capstone_V2/src/img/default/simon-berger-twukN12EN7c-unsplash.jpg" />
+                     </image>
+                  </ImageView>
+               </children></Pane>
          </children>
       </Pane>
    </top>
