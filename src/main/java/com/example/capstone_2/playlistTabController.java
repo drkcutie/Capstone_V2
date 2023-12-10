@@ -298,6 +298,7 @@ public class playlistTabController implements Initializable {
             if (event.getClickCount() == 1) {
                 currentSongs = artistContentList.getSelectionModel().getSelectedItem();
                 selectionController.setFiles(currentSongs, SelectionController.MediaType.ARTIST);
+
             }
         });
 

@@ -23,7 +23,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.*;
 
-public class footerController implements Initializable {
+public class FooterController implements Initializable {
 
     @FXML
     private Label currentDuration;
@@ -78,22 +78,12 @@ public class footerController implements Initializable {
 
         songs = new ArrayList<File>();
         try {
-            songs_directory = new File("src/Music/Playlist1");
             icon_directory = new File("src/img/Icons");
 
         } catch (Exception e) {
             System.out.println("File not found!!!!!!!!!!!!!!!!!!!");
         }
-        files = songs_directory.listFiles();
-        if (files != null) {
-            for (File file : files) {
-                if (Functions.isImageFile(file)) {
-                    System.out.println("Skipping image file " + file.getName());
-                } else {
-                    songs.add(file);
-                }
-            }
-        }
+
         File[] temp = icon_directory.listFiles();
         for(File file: temp)
         {
@@ -102,34 +92,21 @@ public class footerController implements Initializable {
             images.put(name,image);
         }
 
-        setCurrentSong();
+
 
         volumeSlider.valueProperty().addListener(new ChangeListener<Number>() {
             @Override
             public void changed(ObservableValue<? extends Number> observableValue, Number number, Number t1) {
-                mediaPlayer.setVolume(volumeSlider.getValue() * 0.01);
-                if(volumeSlider.getValue() > 80)
-                {
-                    volumeImage.setImage(images.get("volume-max"));
-                }
-                else if(volumeSlider.getValue() > 40)
-                {
-                    volumeImage.setImage(images.get("volume-med"));
-                }
-                else if (volumeSlider.getValue() > 1) {
-                    volumeImage.setImage(images.get("volume-min"));
-                }
-                else
-                {
-                    volumeImage.setImage(images.get("volume-mute"));
-                }
+                if(mediaPlayer != null)
+                 mediaPlayer.setVolume(volumeSlider.getValue() * 0.01);
+                updateVolumeButton();
             }
         });
 
         progressSlider.valueProperty().addListener(new ChangeListener<Number>() {
             @Override
             public void changed(ObservableValue<? extends Number> observableValue, Number oldValue, Number newValue) {
-                if (progressSlider.isValueChanging()) {
+                if (progressSlider.isValueChanging() && mediaPlayer != null) {
                     double end = mediaPlayer.getTotalDuration().toSeconds();
                     double newPosition = progressSlider.getValue() * 0.01 * end;
                     mediaPlayer.seek(Duration.seconds(newPosition));
@@ -138,20 +115,42 @@ public class footerController implements Initializable {
         });
 
         progressSlider.setOnMouseClicked(event -> {
-            double end = mediaPlayer.getTotalDuration().toSeconds();
-            double newPosition = progressSlider.getValue() * 0.01 * end;
-            mediaPlayer.seek(Duration.seconds(newPosition));
+
+            if (mediaPlayer != null) {
+                double end = mediaPlayer.getTotalDuration().toSeconds();
+                double newPosition = progressSlider.getValue() * 0.01 * end;
+                mediaPlayer.seek(Duration.seconds(newPosition));
+            }
         });
 
 
     }
+    void updateVolumeButton()
+    {
+        if(volumeSlider.getValue() > 80)
+        {
+            volumeImage.setImage(images.get("volume-max"));
+        }
+        else if(volumeSlider.getValue() > 40)
+        {
+            volumeImage.setImage(images.get("volume-med"));
+        }
+        else if (volumeSlider.getValue() > 1) {
+            volumeImage.setImage(images.get("volume-min"));
+        }
+        else
+        {
+            volumeImage.setImage(images.get("volume-mute"));
+        }
+    }
 
-    void setSong(int songNumber, ArrayList<File> songs)
+    void setSongfromPlaylist(int songNumber, ArrayList<File> songs)
     {
         // receives an array of songs from the playlist and plays the music.
         this.songNumber = songNumber;
         this.songs = songs;
-        setCurrentSong();
+       setCurrentSong();
+
     }
 
 
@@ -259,6 +258,7 @@ public class footerController implements Initializable {
     void setSongMetadata()
     {
         String path = songs.get(songNumber).getPath();
+
         Map<String, String> map = Functions.extractMetadata(path);
         Platform.runLater(() -> {
             System.out.println(path);
@@ -269,6 +269,9 @@ public class footerController implements Initializable {
     }
     @FXML
     void forwardMusic(ActionEvent event) throws IOException {
+        if(mediaPlayer == null)
+            return;
+
         prevSong = songNumber;
 
         if (songNumber < songs.size() -1 && !shuffle)
@@ -298,12 +301,15 @@ public class footerController implements Initializable {
 
     @FXML
     void playMusic(ActionEvent event) {
+        if(mediaPlayer == null)
+            return;
+
         if (state())
             mediaPlayer.play();
         else
             mediaPlayer.pause();
 
-        playProgress(event);
+       playProgress(event);
     }
     void setCurrentSong()
     {
@@ -327,6 +333,8 @@ public class footerController implements Initializable {
     }
     @FXML
     void prevMusic(ActionEvent event) throws IOException {
+        if(mediaPlayer == null)
+            return;
         if(songNumber != prevSong)
         songNumber = prevSong;
         else if(songNumber != 0)

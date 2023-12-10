@@ -1,11 +1,15 @@
 package com.example.capstone_2;
 
 import com.example.capstone_2.util.*;
+import javafx.application.Platform;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.image.Image;
 import javafx.scene.media.Media;
 import javafx.util.Duration;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import javafx.scene.media.MediaPlayer;
@@ -58,6 +62,8 @@ public class SelectionController {
     private  TableColumn<example, String> title;
     @FXML
     private TableColumn<example,Image> SongImg;
+    private Parent root;
+    FooterController footerControllerController;
 
     public String key;
     public enum MediaType {
@@ -81,7 +87,29 @@ public class SelectionController {
 
         setCells();
 
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("Footer.fxml"));
+
+        try {
+            root = loader.load();
+        } catch (IOException ex) {
+            throw new RuntimeException(ex);
+        }
+
+         footerControllerController = loader.getController();
+
+        tableMusic.setOnMouseClicked(event -> {
+            if (event.getClickCount() == 2) {
+                example selectedExample = tableMusic.getSelectionModel().getSelectedItem();
+                if (selectedExample != null) {
+                    int index = handleDoubleClick(selectedExample);
+                    footerControllerController.setSongfromPlaylist(index, songs);
+
+                }
+            }
+        });
+
     }
+
     public void setCells()
     {
         Number.setCellValueFactory(new PropertyValueFactory<>("number"));  // Use "number" instead of "Number"
@@ -90,14 +118,28 @@ public class SelectionController {
         timeDuration.setCellValueFactory(new PropertyValueFactory<>("timeDuration"));
         SongImg.setCellValueFactory(new PropertyValueFactory<>("Image"));
         tableMusic.setItems(data);
-    }
 
+    }
+    private int handleDoubleClick(example selectedExample) {
+        // Obtain the file path from the selected example
+
+        // Do something with the file path on double-click, for example, print it
+        System.out.println("Double-clicked on row with file path: " + selectedExample.getNumber());
+        // Add your logic to handle the file path as needed on double-click
+
+        // Return the index
+        return selectedExample.getNumber()-1;
+    }
     public void setFiles(String key, MediaType type) {
         if(Objects.equals(this.key, key))
             return;
         songs.clear();
         data.clear();
-        PlaylistName.setText(key);
+        Platform.runLater(() -> {
+            PlaylistName.setText(key);
+
+        });
+
         this.key = key;
         ArrayList<String> temp = new ArrayList<>();
         switch(type)

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextArea?>
@@ -11,7 +12,6 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
 
 <BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="800.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.capstone_2.SelectionController">
    <center>
@@ -58,11 +58,11 @@
                   <Image url="file:/C:/Users/maste/Downloads/openjfx-21.0.1_windows-x64_bin-sdk/javafx-sdk-21.0.1/Capstone_V2/src/img/default/Untitled%20design%20(1).png" />
                </image>
             </ImageView>
-            <Text fx:id="PlaylistName" layoutX="260.0" layoutY="125.0" strokeType="OUTSIDE" strokeWidth="0.0" text="PLAYLIST" wrappingWidth="777.13671875">
+            <Label fx:id="playlistName" layoutX="260.0" layoutY="50.0" text="Label">
                <font>
-                  <Font name="Arial Black" size="68.0" />
+                  <Font size="72.0" />
                </font>
-            </Text>
+            </Label>
             <Pane layoutX="14.0" layoutY="-1.0" prefHeight="200.0" prefWidth="224.0">
                <children>
                   <ImageView fitHeight="128.0" fitWidth="200.0" layoutX="12.0" layoutY="36.0">
