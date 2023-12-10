@@ -102,7 +102,7 @@ public class footerController implements Initializable {
             images.put(name,image);
         }
 
-        setCurrentSong(new ActionEvent());
+        setCurrentSong();
 
         volumeSlider.valueProperty().addListener(new ChangeListener<Number>() {
             @Override
@@ -146,6 +146,13 @@ public class footerController implements Initializable {
 
     }
 
+    void setSong(int songNumber, ArrayList<File> songs)
+    {
+        // receives an array of songs from the playlist and plays the music.
+        this.songNumber = songNumber;
+        this.songs = songs;
+        setCurrentSong();
+    }
 
 
     void playProgress(ActionEvent actionEvent) {
@@ -175,7 +182,7 @@ public class footerController implements Initializable {
                     if (current / end == 1.0) {
                         if(repeatState == 2)
                         {
-                            setCurrentSong(actionEvent);
+                            setCurrentSong();
                         } else
                         {
                             try {
@@ -286,7 +293,7 @@ public class footerController implements Initializable {
 
 
 
-       setCurrentSong(event);
+       setCurrentSong();
     }
 
     @FXML
@@ -298,7 +305,7 @@ public class footerController implements Initializable {
 
         playProgress(event);
     }
-    void setCurrentSong(ActionEvent event)
+    void setCurrentSong()
     {
 
         if(media == null || mediaPlayer == null)
@@ -313,7 +320,7 @@ public class footerController implements Initializable {
         running = true;
         mediaPlayer.setOnReady(this::getDuration);
         mediaPlayer.play();
-        playMusic(event);
+        playMusic(new ActionEvent());
         progressSlider.setValue(0);
         setSongMetadata();
         System.out.println("Set current song is called");
@@ -325,7 +332,7 @@ public class footerController implements Initializable {
         else if(songNumber != 0)
             songNumber--;
 
-        setCurrentSong(event);
+        setCurrentSong();
 
     }
 

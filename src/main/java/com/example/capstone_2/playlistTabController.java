@@ -10,7 +10,9 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.control.Label;
 import javafx.scene.layout.*;
@@ -21,6 +23,7 @@ import javafx.util.Callback;
 
 import java.awt.Button;
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.util.*;
 
@@ -65,9 +68,10 @@ public class playlistTabController implements Initializable {
     private Set<String> albums;
     private  File[] files;
 
-
     private File playlistDirectory;
     private String currentSongs;
+    private Parent root;
+    SelectionController selectionController;
 
     File defaultFolderImagePath = new File("src/img/default/folder.png");
     File defaultArtistImagePath = new File("src/img/default/artist.png");
@@ -94,6 +98,19 @@ public class playlistTabController implements Initializable {
         absolutePathArtist = absolutePathArtist.replace("\\", "/");
         String absolutePathAlbum = defaultAlbumImagePath.getAbsolutePath();
         absolutePathAlbum = absolutePathAlbum.replace("\\", "/");
+
+
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("selection.fxml"));
+        try {
+             root = loader.load();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        SelectionController selectionController = loader.getController();
+
+
 
         try {
 
@@ -270,30 +287,25 @@ public class playlistTabController implements Initializable {
             }
         });
 
-        playlistContentList.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
-            @Override
-            public void changed(ObservableValue<? extends String> observableValue, String s, String t1) {
+        playlistContentList.setOnMouseClicked(event -> {
+            if (event.getClickCount() == 1) { // You can adjust the click count as needed
                 currentSongs = playlistContentList.getSelectionModel().getSelectedItem();
-                previewSongs.getItems().clear();
-                previewSongs.getItems().addAll(Playlist.getSongsfromPlaylist(currentSongs));
+                selectionController.setFiles(currentSongs, SelectionController.MediaType.PLAYLIST);
             }
         });
 
-        artistContentList.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
-            @Override
-            public void changed(ObservableValue<? extends String> observableValue, String s, String t1) {
+        artistContentList.setOnMouseClicked(event -> {
+            if (event.getClickCount() == 1) {
                 currentSongs = artistContentList.getSelectionModel().getSelectedItem();
-                previewSongs.getItems().clear();
-                previewSongs.getItems().addAll(Artist.getSongsfromArtist(currentSongs));
+                selectionController.setFiles(currentSongs, SelectionController.MediaType.ARTIST);
             }
         });
 
-        albumContentList.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
-            @Override
-            public void changed(ObservableValue<? extends String> observableValue, String s, String t1) {
+        albumContentList.setOnMouseClicked(event -> {
+            if (event.getClickCount() == 1) {
                 currentSongs = albumContentList.getSelectionModel().getSelectedItem();
-                previewSongs.getItems().clear();
-                previewSongs.getItems().addAll(Albums.getSongsfromAlbum(currentSongs));
+                System.out.println(currentSongs);
+                selectionController.setFiles(currentSongs, SelectionController.MediaType.ALBUM);
             }
         });
 

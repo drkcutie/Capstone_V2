@@ -2,20 +2,18 @@ package com.example.capstone_2;
 
 import com.example.capstone_2.util.*;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.media.Media;
 import javafx.util.Duration;
 
-import java.awt.*;
 import java.io.File;
-import java.io.ObjectInputStream;
 import java.util.ArrayList;
-import java.util.Collections;
+
 import javafx.scene.media.MediaPlayer;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import java.net.URL;
+import java.util.Objects;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
@@ -62,7 +60,7 @@ public class SelectionController {
     private TableColumn<example,Image> SongImg;
 
     public String key;
-    public enum Type {
+    public enum MediaType {
         PLAYLIST,
         ALBUM
         ,ARTIST
@@ -81,28 +79,22 @@ public class SelectionController {
         assert title != null : "fx:id=\"title\" was not injected: check your FXML file 'selection.fxml'.";
         assert PlaylistName != null : "fx:id=\"PlaylistName\" was not injected: check your FXML file 'selection.fxml'.";
 
-        directory = new File("src/Music/Playlist1");
-        files = directory.listFiles();
-        if (files != null) {
-            for (File file : files) {
-                if (Functions.isImageFile(file)) {
-                    System.out.println("Skipping image file " + file.getName());
-                } else {
-                    songs.add(file);
-                }
-            }
-        }
-        setPlaylist();
+        setCells();
+
+    }
+    public void setCells()
+    {
         Number.setCellValueFactory(new PropertyValueFactory<>("number"));  // Use "number" instead of "Number"
         title.setCellValueFactory(new PropertyValueFactory<>("title"));
         album.setCellValueFactory(new PropertyValueFactory<>("album"));
         timeDuration.setCellValueFactory(new PropertyValueFactory<>("timeDuration"));
         SongImg.setCellValueFactory(new PropertyValueFactory<>("Image"));
         tableMusic.setItems(data);
-
     }
 
-    public void setFiles(String key, Type type) {
+    public void setFiles(String key, MediaType type) {
+        if(Objects.equals(this.key, key))
+            return;
         songs.clear();
         data.clear();
         PlaylistName.setText(key);
@@ -123,9 +115,12 @@ public class SelectionController {
         for(String path : temp)
         {
             File file = new File(path);
+            System.out.println("File Path = " +path + "\n" );
             songs.add(file);
         }
         setPlaylist();
+        setCells();
+
     }
 
 
@@ -152,7 +147,7 @@ public class SelectionController {
                 long minutes = totalSeconds / 60;
                 long seconds = totalSeconds % 60;
                 String formattedDuration = String.format("%02d:%02d", minutes, seconds);
-                Image img = new Image(new File("src/img/default/no-image-icon.jpg").toURI().toString());
+                Image img = Functions.extractAndDisplayAlbumCover(song.getPath());
                 // Create example object and add it to the data list
                 example songExample = new example(index, Functions.nameWithoutExtension(song.getName()), "Unknown", formattedDuration,img);
                 data.add(songExample);
@@ -160,8 +155,8 @@ public class SelectionController {
                 // Dispose of the MediaPlayer after obtaining the duration
                 songPlayer.dispose();
             });
-        }
 
+        }
     }
 
 
