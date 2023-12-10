@@ -27,6 +27,12 @@
         </menus>
       </MenuBar>
    </top>
+    <left>
+        <fx:include source="library.fxml"/>
+    </left>
+    <center>
+        <fx:include source="selection.fxml"/>
+    </center>
    <bottom>
     <fx:include source="Footer.fxml" BorderPane.alignment="CENTER" />
    </bottom>

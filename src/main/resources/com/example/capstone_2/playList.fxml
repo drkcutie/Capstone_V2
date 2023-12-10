@@ -5,15 +5,15 @@
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.layout.BorderPane?>
 
-<BorderPane fx:id="sideTab" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="298.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.capstone_2.playlistController">
+<BorderPane fx:id="sideTab" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="451.0" prefWidth="488.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.capstone_2.playlistTabController">
    <center>
-      <TabPane fx:id="tabContainers" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
+      <TabPane fx:id="tabContainers" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="457.0" prefWidth="470.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
         <tabs>
           <Tab fx:id="playListTab" text="Playlists">
                <content>
                   <BorderPane fx:id="playListContent" prefHeight="200.0" prefWidth="200.0">
                      <center>
-                        <ListView fx:id="playlistContentList" onMouseClicked="#sendData" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+                         <ListView fx:id="playlistContentList" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="347.0" prefWidth="542.0" BorderPane.alignment="CENTER" />
                      </center></BorderPane>
                </content>
           </Tab>
@@ -27,10 +27,11 @@
           </Tab>
             <Tab fx:id="albumTab" text="Album">
                <content>
-                  <BorderPane fx:id="albumContent" prefHeight="200.0" prefWidth="200.0">
+                  <BorderPane prefHeight="200.0" prefWidth="200.0">
                      <center>
                         <ListView fx:id="albumContentList" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
-                     </center></BorderPane>
+                     </center>
+                  </BorderPane>
                </content>
             </Tab>
         </tabs>
