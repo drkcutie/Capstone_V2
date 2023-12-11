@@ -12,7 +12,7 @@ import java.io.IOException;
 public class playlistTab extends Application {
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(playlistTab.class.getResource("playList.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(playlistTab.class.getResource("Playlist.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
         stage.setTitle("Prototype!");
         stage.setScene(scene);

@@ -77,13 +77,13 @@ public class SelectionController {
 
     @FXML
     void initialize() {
-        assert Number != null : "fx:id=\"Number\" was not injected: check your FXML file 'selection.fxml'.";
-        assert album != null : "fx:id=\"album\" was     not injected: check your FXML file 'selection.fxml'.";
-        assert playPicture != null : "fx:id=\"playPicture\" was not injected: check your FXML file 'selection.fxml'.";
-        assert tableMusic != null : "fx:id=\"tableMusic\" was not injected: check your FXML file 'selection.fxml'.";
-        assert timeDuration != null : "fx:id=\"timeDuration\" was not injected: check your FXML file 'selection.fxml'.";
-        assert title != null : "fx:id=\"title\" was not injected: check your FXML file 'selection.fxml'.";
-        assert PlaylistName != null : "fx:id=\"PlaylistName\" was not injected: check your FXML file 'selection.fxml'.";
+        assert Number != null : "fx:id=\"Number\" was not injected: check your FXML file 'Selection.fxml'.";
+        assert album != null : "fx:id=\"album\" was     not injected: check your FXML file 'Selection.fxml'.";
+        assert playPicture != null : "fx:id=\"playPicture\" was not injected: check your FXML file 'Selection.fxml'.";
+        assert tableMusic != null : "fx:id=\"tableMusic\" was not injected: check your FXML file 'Selection.fxml'.";
+        assert timeDuration != null : "fx:id=\"timeDuration\" was not injected: check your FXML file 'Selection.fxml'.";
+        assert title != null : "fx:id=\"title\" was not injected: check your FXML file 'Selection.fxml'.";
+        assert PlaylistName != null : "fx:id=\"PlaylistName\" was not injected: check your FXML file 'Selection.fxml'.";
 
         setCells();
 

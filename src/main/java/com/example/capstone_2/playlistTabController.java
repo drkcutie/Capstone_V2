@@ -101,7 +101,7 @@ public class playlistTabController implements Initializable {
 
 
 
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("selection.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("Selection.fxml"));
         try {
              root = loader.load();
         } catch (IOException e) {
