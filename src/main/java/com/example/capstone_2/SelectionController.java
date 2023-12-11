@@ -64,8 +64,13 @@ public class SelectionController {
     private TableColumn<example,Image> SongImg;
     private Parent root;
     FooterController footerControllerController;
-
+    private mainController main;
     public String key;
+
+    public void init(mainController mainController) {
+        main = mainController;
+    }
+
     public enum MediaType {
         PLAYLIST,
         ALBUM

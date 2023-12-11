@@ -37,4 +37,7 @@
         </tabs>
       </TabPane>
    </center>
+    <top>
+        <fx:include source="Library.fxml"/>
+    </top>
 </BorderPane>

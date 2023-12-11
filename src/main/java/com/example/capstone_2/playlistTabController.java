@@ -29,6 +29,7 @@ import java.util.*;
 
 public class playlistTabController implements Initializable {
 
+    private mainController main;
     @FXML
     private BorderPane albumContent;
 
@@ -290,7 +291,7 @@ public class playlistTabController implements Initializable {
         playlistContentList.setOnMouseClicked(event -> {
             if (event.getClickCount() == 1) { // You can adjust the click count as needed
                 currentSongs = playlistContentList.getSelectionModel().getSelectedItem();
-                selectionController.setFiles(currentSongs, SelectionController.MediaType.PLAYLIST);
+                main.selectionController.setFiles(currentSongs, SelectionController.MediaType.PLAYLIST);
             }
         });
 
@@ -312,5 +313,9 @@ public class playlistTabController implements Initializable {
 
 
 
+    }
+
+    public void init(mainController mainController) {
+        main = mainController;
     }
 }

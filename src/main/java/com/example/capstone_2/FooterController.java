@@ -51,7 +51,7 @@ public class FooterController implements Initializable {
     private ImageView repeatButton;
     @FXML
     private  ImageView volumeImage;
-
+    private mainController main;
     private Media media;
     FileInputStream fileInputStream;
     private Timer timer;
@@ -344,4 +344,7 @@ public class FooterController implements Initializable {
 
     }
 
+    public void init(mainController mainController) {
+        main = mainController;
+    }
 }
